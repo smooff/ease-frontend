@@ -2,8 +2,8 @@ import './App.css';
 import {LoginCallback, SecureRoute, Security} from "@okta/okta-react";
 import {OktaAuth, toRelativeUrl} from "@okta/okta-auth-js";
 import {Route, useHistory} from "react-router-dom";
-import Login from "./user/pages/login/Login";
-import Welcome from "./user/pages/welcome/Welcome";
+import MainPage from "./user/pages/main/MainPage";
+import WelcomePage from "./user/pages/welcome/WelcomePage";
 
 function App() {
 
@@ -28,10 +28,10 @@ function App() {
             oktaAuth={oktaAuth}
             restoreOriginalUri={restoreOriginalUri}
         >
-            <Route path="/" exact component={Welcome}/>
+            <Route path="/" exact component={WelcomePage}/>
             <Route path="/login/callback" component={LoginCallback}/>
             {/*//SecureRoute obaluje security componenty*/}
-            <SecureRoute path="/signin" component={Login}/>
+            <SecureRoute path="/signin" component={MainPage}/>
         </Security>
     );
 }
