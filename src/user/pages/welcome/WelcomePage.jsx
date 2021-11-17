@@ -1,11 +1,11 @@
 import React from 'react';
 import WelcomeBox from "../../components/welcomeBox/WelcomeBox";
 
-const Welcome = (props) => {
+const WelcomePage = (props) => {
 
     return (<>
         <WelcomeBox/>
     </>);
 }
 
-export default Welcome;
+export default WelcomePage;

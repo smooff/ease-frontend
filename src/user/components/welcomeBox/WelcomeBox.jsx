@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 const WelcomeBox = (props) => {
 
-    //styly
+    //styles
     const useStyles = makeStyles(() => ({
         title: {
             textAlign: "center",
