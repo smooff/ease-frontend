@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Grid, makeStyles, Typography} from "@material-ui/core";
+import axios from "axios";
+import {useOktaAuth} from "@okta/okta-react";
 
 const SearchResultBox = (props) => {
+
+    //auth
+    const {authState, oktaAuth} = useOktaAuth();
+
     //styles
     const useStyles = makeStyles(() => ({
         resultBox: {
@@ -16,6 +22,18 @@ const SearchResultBox = (props) => {
         }
     }));
     const classes = useStyles();
+
+    const config = {
+        headers: { Authorization: `Bearer ${authState.accessToken.accessToken}` }
+    };
+    const bodyParameters = {
+        name: "credit"
+    };
+    axios.put(
+        'http://tp2-ai.fei.stuba.sk:8080/core/search/general',
+        bodyParameters,
+        config
+    ).then((res) => console.log(res.data)).catch(console.log);
 
     return (
         <Grid className={classes.resultBox}>
