@@ -89,7 +89,7 @@ const MainPage = (props) => {
             style={{minHeight: '100%'}}
         >
             <Grid item>
-                {boxVisible ? <SearchResultBox searchedValue={searchedValue} windowHeight={height} windowWidht={width}/> : null}
+                {/*{boxVisible ? <SearchResultBox searchedValue={searchedValue} windowHeight={height} windowWidht={width}/> : null}*/}
             </Grid>
         </Grid>
 
