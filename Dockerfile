@@ -4,8 +4,8 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 RUN npm cache clean --force
-RUN npm i
-RUN npm install react-scripts@3.4.1 -g
+RUN npm i --no-package-lock
+RUN npm install react-scripts@3.4.1 -g --no-package-lock
 COPY . ./
 RUN npm run build
 
