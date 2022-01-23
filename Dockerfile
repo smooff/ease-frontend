@@ -12,8 +12,8 @@ FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 # new
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY ./ease-cert.pem /etc/nginx/certificate
-COPY ./ease-key.key /etc/nginx/certificate
+COPY ./ease.crt /etc/ssl/certs/
+COPY ./ease.key /etc/ssl/private/
 EXPOSE 80
 EXPOSE 433
 CMD ["nginx", "-g", "daemon off;"]

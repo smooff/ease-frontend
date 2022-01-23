@@ -30,7 +30,7 @@ const SearchBar = (props) => {
     };
     const makeRequest = () => {
         return axios.put(
-            'http://tp2-ai.fei.stuba.sk:8080/core/search/general',
+            'https://tp2-ai.fei.stuba.sk:8080/core/search/general',
             bodyParameters,
             config
         ).then((res) => {
