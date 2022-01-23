@@ -23,7 +23,7 @@ const MainPage = (props) => {
     //window dimensions for responsive design
     const {height, width} = useWindowDimensions();
 
-    const [searchBarMarginTop, setSearchBarMarginTop] = useState(0.35);
+    const [searchBarMarginTop, setSearchBarMarginTop] = useState(0);
 
     useEffect(() => {
         if (boxVisible) {
@@ -37,7 +37,11 @@ const MainPage = (props) => {
     const useStyles = makeStyles(() => ({
         searchBar: {
             minHeight: '100%',
-            marginTop: height * searchBarMarginTop
+            marginTop: '500px'
+        },
+        logo:{
+            width:"388px",
+            height:"161px",
         }
     }));
     const classes = useStyles();
@@ -69,10 +73,8 @@ const MainPage = (props) => {
             justifyContent="center"
             className={classes.searchBar}
         >
-            <Grid item>
-                <Typography variant={"h4"}>
-                    LOGO
-                </Typography>
+            <Grid item >
+                <img src="logo-nobackground.png" className={classes.logo}/>
             </Grid>
             <Grid item>
                 <SearchBar changeBoxVisibility={changeBoxVisible} changeSearchValue={changeSearchedValue}
