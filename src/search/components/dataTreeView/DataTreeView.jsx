@@ -19,18 +19,18 @@ const DataTreeView = (props) => {
                     label={treeItemData.name}
                     // children={children}
                 >
-                    <TreeItem
-                        label={treeItemData.id}
-                    />
+                    {/*<TreeItem*/}
+                    {/*    label={treeItemData.id}*/}
+                    {/*/>*/}
                     <TreeItem
                         label={treeItemData.type}
                     />
                     <TreeItem
                         label={treeItemData.name}
                     />
-                    <TreeItem
-                        label={treeItemData.packageId}
-                    />
+                    {/*<TreeItem*/}
+                    {/*    label={treeItemData.packageId}*/}
+                    {/*/>*/}
                 </TreeItem>
             );
         });

@@ -31,7 +31,7 @@ function App() {
             <Route path="/" exact component={WelcomePage}/>
             <Route path="/login/callback" component={LoginCallback}/>
             {/*//SecureRoute obaluje security componenty*/}
-            <SecureRoute path="/signin" component={MainPage}/>
+            <SecureRoute path="/ease" component={MainPage}/>
         </Security>
     );
 }

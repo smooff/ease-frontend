@@ -8,7 +8,11 @@ const WelcomeBox = (props) => {
     const useStyles = makeStyles(() => ({
         title: {
             textAlign: "center",
-            marginTop: "20%"
+            marginTop: "15%"
+        },
+        logo:{
+            width:"516px",
+            height:"215px",
         }
     }));
     const classes = useStyles();
@@ -16,13 +20,11 @@ const WelcomeBox = (props) => {
     return (
         <Grid container className={classes.title}>
             <Grid item xs={12}>
-                <Typography variant="h2" component="h2">
-                    EASE Projekt
-                </Typography>
+               <img src="logo-nobackground.png" className={classes.logo}/>
             </Grid>
             <Grid item xs={12}>
-                <Link to="/signin">
-                    <Button variant="contained">Sign in</Button>
+                <Link to="/ease">
+                    <Button variant="contained">Prihlásiť sa</Button>
                 </Link>
             </Grid>
         </Grid>

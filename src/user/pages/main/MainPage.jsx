@@ -3,7 +3,6 @@ import {useOktaAuth} from "@okta/okta-react";
 import {Grid, makeStyles} from "@material-ui/core";
 import Navbar from "../../components/navbar/Navbar";
 import SearchBar from "../../../search/components/searchBar/SearchBar";
-import {Typography} from "@mui/material";
 import SearchResultBox from "../../../search/components/searchResultBox/SearchResultBox";
 import {useWindowDimensions} from "../../../responsiveDesign/components/responsiveUtility/ResponsiveUtility";
 
@@ -23,13 +22,13 @@ const MainPage = (props) => {
     //window dimensions for responsive design
     const {height, width} = useWindowDimensions();
 
-    const [searchBarMarginTop, setSearchBarMarginTop] = useState(0);
+    const [searchBarMarginTop, setSearchBarMarginTop] = useState('14rem');
 
     useEffect(() => {
         if (boxVisible) {
-            setSearchBarMarginTop(0.05);
+            setSearchBarMarginTop('2rem');
         } else {
-            setSearchBarMarginTop(0.35);
+            setSearchBarMarginTop('14rem');
         }
     }, [boxVisible]);
 
@@ -37,11 +36,11 @@ const MainPage = (props) => {
     const useStyles = makeStyles(() => ({
         searchBar: {
             minHeight: '100%',
-            marginTop: '500px'
+            marginTop: searchBarMarginTop
         },
-        logo:{
-            width:"388px",
-            height:"161px",
+        logo: {
+            width: "388px",
+            height: "161px",
         }
     }));
     const classes = useStyles();
@@ -73,7 +72,7 @@ const MainPage = (props) => {
             justifyContent="center"
             className={classes.searchBar}
         >
-            <Grid item >
+            <Grid item>
                 <img src="logo-nobackground.png" className={classes.logo}/>
             </Grid>
             <Grid item>

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Box} from "@material-ui/core";
 import TextField from '@mui/material/TextField';
-import {makeStyles} from "@material-ui/core/styles";
+import {Grid, makeStyles} from "@material-ui/core";
 import axios from "axios";
 import {useOktaAuth} from "@okta/okta-react";
 import {Button} from "@mui/material";
@@ -12,7 +12,13 @@ const SearchBar = (props) => {
     const searchBarWidth = props.windowWidth;
 
     const useStyles = makeStyles(() => ({
-
+        searchButton: {
+            marginTop: "10px",
+            marginBottom:"10px",
+        },
+        dataTreeStyles:{
+            paddingBottom:"100px",
+        }
     }));
     const classes = useStyles();
 
@@ -42,10 +48,10 @@ const SearchBar = (props) => {
     //handle enter key for submitting searched value
     const nameForm = useRef(null);
 
-    const handleSearch = () =>{
+    const handleSearch = () => {
         const form = nameForm.current;
         var changeableSearchedValue = `${form['searchvalue'].value}`;
-        if(changeableSearchedValue === ""){
+        if (changeableSearchedValue === "") {
             setResponseData("");
             return false;
         }
@@ -58,7 +64,7 @@ const SearchBar = (props) => {
 
     const handleKeyPress = (e) => {
         if (e.keyCode == 13) {
-            if(!handleSearch()){
+            if (!handleSearch()) {
                 props.changeSearchValue("");
                 props.changeBoxVisibility(false);
             }
@@ -67,7 +73,7 @@ const SearchBar = (props) => {
 
     //handle click button for submitting searched value
     const handleClickEvent = () => {
-        if(!handleSearch()){
+        if (!handleSearch()) {
             props.changeSearchValue("");
             props.changeBoxVisibility(false);
         }
@@ -85,13 +91,18 @@ const SearchBar = (props) => {
                 width: searchBarWidth * 0.45
             }}
         >
-            <form ref={nameForm} onSubmit={onSubmit}>
-                <TextField fullWidth label="Vyhľadaj" id="Vyhľadaj" color="secondary" name={'searchvalue'}
-                           onKeyDown={handleKeyPress}
-                />
-            </form>
-            <Button onClick={handleClickEvent} variant="contained">Vyhľadaj</Button>
-            {responseData ? <DataTreeView treeItems={responseData} />:""}
+            <Grid>
+                <form ref={nameForm} onSubmit={onSubmit}>
+                    <TextField fullWidth label="Vyhľadaj" id="Vyhľadaj" color="secondary" name={'searchvalue'}
+                               onKeyDown={handleKeyPress}
+                    />
+                </form>
+            </Grid>
+            <Grid className={classes.searchButton}>
+                <Button onClick={handleClickEvent} variant="contained"
+                        className={classes.searchButton}>Vyhľadaj</Button>
+            </Grid>
+            {responseData ? <DataTreeView treeItems={responseData} className={classes.dataTreeStyles}/> : ""}
         </Box>
     );
 }
