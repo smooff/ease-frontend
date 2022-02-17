@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import {Grid, makeStyles} from "@material-ui/core";
 import axios from "axios";
 import {useOktaAuth} from "@okta/okta-react";
-import {Button} from "@mui/material";
+import {Button, TablePagination} from "@mui/material";
 import DataTreeView from "../dataTreeView/DataTreeView";
 
 const SearchBar = (props) => {
@@ -24,6 +24,19 @@ const SearchBar = (props) => {
 
     const [responseData, setResponseData] = useState();
 
+    //PAGING
+    //page, na ktorej je defaultne - cize na prvej
+    const [pageCount, setPageCount] = React.useState(0);
+    //pocet poloziek na page
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const handleChangePage = (event, newPage) => {
+        setPageCount(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPageCount(0);
+    };
+
     //auth
     const {authState, oktaAuth} = useOktaAuth();
 
@@ -32,7 +45,11 @@ const SearchBar = (props) => {
         headers: {Authorization: `Bearer ${authState.accessToken.accessToken}`}
     };
     const bodyParameters = {
-        name: ""
+        name: "",
+        pagingFilter: {
+            pageSize: rowsPerPage,
+            page: pageCount
+        }
     };
     const makeRequest = () => {
         return axios.put(
@@ -102,7 +119,18 @@ const SearchBar = (props) => {
                 <Button onClick={handleClickEvent} variant="contained"
                         className={classes.searchButton}>Vyhľadaj</Button>
             </Grid>
-            {responseData ? <DataTreeView treeItems={responseData} className={classes.dataTreeStyles}/> : ""}
+            {responseData ?<> <DataTreeView treeItems={responseData} className={classes.dataTreeStyles}/>
+                <TablePagination
+                component="div"
+                count={responseData.numAllResults}
+                page={pageCount}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                labelRowsPerPage={"Strana"}
+                />
+
+            </>: ""}
         </Box>
     );
 }

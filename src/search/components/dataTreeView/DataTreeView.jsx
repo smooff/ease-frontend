@@ -7,7 +7,7 @@ import TreeItem from "@material-ui/lab/TreeItem";
 const DataTreeView = (props) => {
 
     const getTreeItemsFromData = treeItems => {
-        return treeItems.map(treeItemData => {
+        return treeItems.results.map(treeItemData => {
             let children = treeItemData.type;
             // if (treeItemData.type && treeItemData.type.length > 0) {
             //     children = getTreeItemsFromData(treeItemData.type);
