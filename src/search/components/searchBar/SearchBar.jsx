@@ -6,6 +6,7 @@ import axios from "axios";
 import {useOktaAuth} from "@okta/okta-react";
 import {Button, TablePagination} from "@mui/material";
 import DataTreeView from "../dataTreeView/DataTreeView";
+import SearchFilter from "../searchFilter/SearchFilter";
 
 const SearchBar = (props) => {
 
@@ -23,6 +24,24 @@ const SearchBar = (props) => {
     const classes = useStyles();
 
     const [responseData, setResponseData] = useState();
+
+    //typ entity z dropdownu
+    const [dropDownEntityType, setDropDownEntityType] = useState(null);
+    const changeDropDownEntityType = (text) => {
+        setDropDownEntityType(text);
+    };
+
+    //diagramDetailedTypes z dropdownu
+    const [dropDownDiagramDetailedTypes, setDropDownDiagramDetailedTypes] = useState(null);
+    const changeDropDownDiagramDetailedTypes = (text) => {
+        setDropDownDiagramDetailedTypes(text);
+    };
+
+    //objectDetailedTypes z dropdownu
+    const [dropDownObjectDetailedTypes, setDropDownObjectDetailedTypes] = useState(null);
+    const changeDropDownObjectDetailedTypes = (text) => {
+        setDropDownObjectDetailedTypes(text);
+    };
 
     //PAGING
     //page, na ktorej je defaultne - cize na prvej
@@ -57,6 +76,9 @@ const SearchBar = (props) => {
             'https://tp2-ai.fei.stuba.sk:8080/core/search/general',
             {
                 name: changeableSearchedValue,
+                entityTypeFilter: dropDownEntityType,
+                objectDetailedTypeFilter: dropDownObjectDetailedTypes,
+                diagramDetailedTypes: dropDownDiagramDetailedTypes,
                 pagingFilter: {
                     pageSize: rows,
                     page: count
@@ -134,6 +156,10 @@ const SearchBar = (props) => {
             <Grid className={classes.searchButton}>
                 <Button onClick={handleClickEvent} variant="contained"
                         className={classes.searchButton}>Vyhľadaj</Button>
+                <SearchFilter changeDropDownEntity={changeDropDownEntityType}
+                              changeDropDownDiagram={changeDropDownDiagramDetailedTypes}
+                              changeDropDownObject={changeDropDownObjectDetailedTypes}
+                ></SearchFilter>
             </Grid>
             {responseData ? <> <DataTreeView treeItems={responseData} className={classes.dataTreeStyles}/>
                 <TablePagination
