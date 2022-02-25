@@ -4,6 +4,8 @@ import {OktaAuth, toRelativeUrl} from "@okta/okta-auth-js";
 import {Route, useHistory} from "react-router-dom";
 import MainPage from "./user/pages/main/MainPage";
 import WelcomePage from "./user/pages/welcome/WelcomePage";
+import LoginPage from "./user/pages/loginPage/LoginPage";
+import Login from "./Login"
 
 function App() {
 
@@ -29,9 +31,11 @@ function App() {
             restoreOriginalUri={restoreOriginalUri}
         >
             <Route path="/" exact component={WelcomePage}/>
-            <Route path="/login/callback" component={LoginCallback}/>
+            <Route path='/login' exact={true} component={Login}/>
             {/*//SecureRoute obaluje security componenty*/}
             <SecureRoute path="/ease" component={MainPage}/>
+            <Route path='/registration' component={LoginPage}/>
+
         </Security>
     );
 }

@@ -27,6 +27,12 @@ const WelcomeBox = (props) => {
                     <Button variant="contained">Prihlásiť sa</Button>
                 </Link>
             </Grid>
+
+            <Grid item xs={12}>
+                <Link to="/login">
+                    <Button variant="contained">Registracia</Button>
+                </Link>
+            </Grid>
         </Grid>
     );
 }
