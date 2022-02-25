@@ -30,11 +30,12 @@ function App() {
             oktaAuth={oktaAuth}
             restoreOriginalUri={restoreOriginalUri}
         >
-            <Route path="/" exact component={WelcomePage}/>
+            <Route path="/" exact={true} component={WelcomePage}/>
             <Route path='/login' exact={true} component={Login}/>
             {/*//SecureRoute obaluje security componenty*/}
-            <SecureRoute path="/ease" component={MainPage}/>
-            <Route path='/registration' component={LoginPage}/>
+            <SecureRoute path="/ease" exact={true} component={MainPage}/>
+            <Route path='/registration' exact={true} component={LoginPage}/>
+            <Route path='/login/callback' component={LoginCallback}/>
 
         </Security>
     );

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withOktaAuth } from '@okta/okta-react';
 import { OktaAuth } from '@okta/okta-auth-js';
+import {Link} from "react-router-dom";
+import {Button, TextField} from "@material-ui/core";
 
 class OktaSignInWidget extends Component {
     constructor(props) {
@@ -52,13 +54,16 @@ class OktaSignInWidget extends Component {
                 <p>Prosím prihláste sa pre pokračovanie</p>
                 <label className="full-width-input">
                     Email
-                    <input type="text" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} required />
+                    <TextField type="text" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} required />
                 </label>
                 <label className="full-width-input">
                     Heslo
-                    <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange} required autoComplete="off" />
+                    <TextField type="password" placeholder="Heslo" value={this.state.password} onChange={this.handlePasswordChange} required autoComplete="off" />
+
+                    {/*<input type="password" placeholder="Heslo" value={this.state.password} onChange={this.handlePasswordChange} required autoComplete="off" />*/}
                 </label>
-                <button className="button">Prihlásiť sa</button>
+                <Button className="button" variant="contained" >Prihlásiť sa</Button>
+
             </form>
         );
     }

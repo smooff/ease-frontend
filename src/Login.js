@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import OktaSignInWidget from './OktaSignInWidget';
 
@@ -11,6 +11,7 @@ function Login() {
             return oktaAuth.signInWithRedirect({
                 sessionToken: res.session.token
             });
+
         }
     }
 
@@ -19,7 +20,7 @@ function Login() {
     }
 
     return authState.isAuthenticated ?
-        <Redirect to={{ pathname: '/' }}/> :
+        <Link to={{ pathname: '/ease' }}/> :
         <OktaSignInWidget
             baseUrl='https://dev-05820212.okta.com/'
             onSuccess={onSuccess}

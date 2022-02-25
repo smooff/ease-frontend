@@ -30,7 +30,7 @@ const WelcomeBox = (props) => {
 
             <Grid item xs={12}>
                 <Link to="/login">
-                    <Button variant="contained">Registracia</Button>
+                    <Button variant="contained">Prihlásenie 2.0</Button>
                 </Link>
             </Grid>
         </Grid>
