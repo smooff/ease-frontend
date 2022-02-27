@@ -66,7 +66,7 @@ const SearchBar = (props) => {
     //auth
     const {authState, oktaAuth} = useOktaAuth();
 
-    //request
+    //config pre request
     const config = {
         headers: {Authorization: `Bearer ${authState.accessToken.accessToken}`}
     };
@@ -88,7 +88,20 @@ const SearchBar = (props) => {
         ).then((res) => {
             setResponseData("");
             setResponseData(res.data);
+            makeRequestUserSearchHistory(changeableSearchedValue);
         }).catch(console.log);
+    }
+
+    //request na zaznamenie historie vyhladavania
+    const makeRequestUserSearchHistory = (query) => {
+        return axios.post(
+            'https://tp2-ai.fei.stuba.sk:8080/user/searchHistory', null, {
+                headers: {Authorization: `Bearer ${authState.accessToken.accessToken}`},
+                params: {
+                    query,
+                }
+            }
+        ).then(response => response.status).catch(console.log);
     }
 
     //handle enter key for submitting searched value
