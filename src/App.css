@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.login-form {
+  display: inline-block;
+  width: 20em;
+  margin-left: 25%;
+}
+
+.full-width-input {
+  display: block;
+  text-align: right;
+}
+
+.full-width-input input {
+  width: 12em;
+  padding: 4px 8px;
+  margin: 4px 8px;
+  border: 1px solid #aaaaaa;
+  border-radius: 0;
+}
