@@ -3,10 +3,18 @@ import {useOktaAuth} from "@okta/okta-react";
 import {Grid, makeStyles} from "@material-ui/core";
 import Navbar from "../../components/navbar/Navbar";
 import SearchBar from "../../../search/components/searchBar/SearchBar";
-import SearchResultBox from "../../../search/components/searchResultBox/SearchResultBox";
 import {useWindowDimensions} from "../../../responsiveDesign/components/responsiveUtility/ResponsiveUtility";
+import HistoryDrawer from "../../components/historyDrawer/HistoryDrawer";
 
 const MainPage = (props) => {
+
+    const [openHistoryDrawer, setOpenHistoryDrawer] = React.useState(false);
+    const handleHistoryDrawerOpen = (x) => {
+        setOpenHistoryDrawer(x);
+    };
+    const handleHistoryDrawerClose = (x) => {
+        setOpenHistoryDrawer(x);
+    };
 
     //result box visibility
     const [boxVisible, setBoxVisible] = useState(false);
@@ -62,8 +70,9 @@ const MainPage = (props) => {
     }, [authState, oktaAuth]); // Update if authState changes
 
     return (<>
-        <Navbar userName={userInfo?.name}/>
+        <Navbar userName={userInfo?.name} historyDrawerState={handleHistoryDrawerOpen}/>
 
+        <HistoryDrawer drawerState={openHistoryDrawer} closeDrawer={handleHistoryDrawerClose}/>
         <Grid
             container
             spacing={0}

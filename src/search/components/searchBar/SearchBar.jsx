@@ -7,6 +7,8 @@ import {useOktaAuth} from "@okta/okta-react";
 import {Button, TablePagination} from "@mui/material";
 import DataTreeView from "../dataTreeView/DataTreeView";
 import SearchFilter from "../searchFilter/SearchFilter";
+import {useRecoilState} from "recoil";
+import {SearchHistoryString} from "../../state/searchHistoryString/SearchHistoryString";
 
 const SearchBar = (props) => {
 
@@ -19,6 +21,12 @@ const SearchBar = (props) => {
         },
         dataTreeStyles: {
             paddingBottom: "100px",
+        },
+        toolbar: {
+            "& > p:nth-of-type(2)": {
+                fontSize: "0.875rem",
+                fontWeight: 600
+            }
         }
     }));
     const classes = useStyles();
@@ -41,6 +49,22 @@ const SearchBar = (props) => {
     const [dropDownObjectDetailedTypes, setDropDownObjectDetailedTypes] = useState(null);
     const changeDropDownObjectDetailedTypes = (text) => {
         setDropDownObjectDetailedTypes(text);
+    };
+
+    //string, podla ktoreho sa bude zoradovat
+    const [orderKeySort, setOrderKeySort] = React.useState(null);
+    const changeOrderKeySort = (text) => {
+        setOrderKeySort(text);
+    };
+    //zoradenie
+    const [descendingSort, setDescendingSort] = React.useState(null);
+    const changeDescendingSort = (text) => {
+        setDescendingSort(text);
+        if (text === null) {
+            changeOrderKeySort(null);
+        } else {
+            changeOrderKeySort("name");
+        }
     };
 
     //PAGING
@@ -81,7 +105,9 @@ const SearchBar = (props) => {
                 diagramDetailedTypes: dropDownDiagramDetailedTypes,
                 pagingFilter: {
                     pageSize: rows,
-                    page: count
+                    page: count,
+                    descending: descendingSort,
+                    orderKey: orderKeySort
                 }
             },
             config
@@ -151,6 +177,7 @@ const SearchBar = (props) => {
     const onSubmit = (event) => {
         event.preventDefault();
     };
+    const [historyString, setHistoryString] = useRecoilState(SearchHistoryString);
 
     return (
         <Box
@@ -162,7 +189,8 @@ const SearchBar = (props) => {
             <Grid>
                 <form ref={nameForm} onSubmit={onSubmit}>
                     <TextField fullWidth label="Vyhľadaj" id="Vyhľadaj" color="secondary" name={'searchvalue'}
-                               onKeyDown={handleKeyPress}
+                               onKeyDown={handleKeyPress} onChange={e => setHistoryString(e.target.value)}
+                               value={historyString}
                     />
                 </form>
             </Grid>
@@ -172,17 +200,21 @@ const SearchBar = (props) => {
                 <SearchFilter changeDropDownEntity={changeDropDownEntityType}
                               changeDropDownDiagram={changeDropDownDiagramDetailedTypes}
                               changeDropDownObject={changeDropDownObjectDetailedTypes}
+                              changeDescending={changeDescendingSort}
                 ></SearchFilter>
             </Grid>
             {responseData ? <> <DataTreeView treeItems={responseData} className={classes.dataTreeStyles}/>
                 <TablePagination
+                    classes={{
+                        toolbar: classes.toolbar
+                    }}
                     component="div"
                     count={responseData.numAllResults}
                     page={pageCount}
                     onPageChange={handleChangePage}
                     rowsPerPage={rowsPerPage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
-                    labelRowsPerPage={"Strana"}
+                    labelRowsPerPage={"Počet záznamov"}
                 />
 
             </> : ""}

@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-    AppBar,
-    Box,
-    IconButton,
-    makeStyles,
-    Menu,
-    MenuItem,
-    Toolbar,
-    Typography
-} from "@material-ui/core";
-import MenuIcon from '@mui/icons-material/Menu';
-import {AccountCircle} from "@material-ui/icons";
+import {AppBar, Box, IconButton, makeStyles, Menu, MenuItem, Toolbar, Typography} from "@material-ui/core";
+import {AccountCircle, History} from "@material-ui/icons";
 import {useHistory} from "react-router-dom";
 import {useOktaAuth} from "@okta/okta-react";
 
@@ -51,12 +41,19 @@ const Navbar = (props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleDrawerOpen = () => {
+        props.historyDrawerState(true);
+    }
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static" className={classes.toolbarColor}>
                 <Toolbar variant="dense">
-                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
-                        <MenuIcon/>
+                    <IconButton onClick={handleDrawerOpen} edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
+                        <History/>
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}} className={classes.username}>
+                            História
+                        </Typography>
                     </IconButton>
 
                     <div className={classes.toolbarButtons}>

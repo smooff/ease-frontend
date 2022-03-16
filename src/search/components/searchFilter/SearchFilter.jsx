@@ -55,6 +55,12 @@ const SearchFilter = (props) => {
         props.changeDropDownEntity(event.target.value);
     };
 
+    const [descendingSort, setDescendingSort] = React.useState('');
+    const handleChangeDescendingSort = (event) => {
+        setDescendingSort(event.target.value);
+        props.changeDescending(event.target.value);
+    };
+
     const makeRequest = (entity) => {
         return axios.get(
             'https://tp2-ai.fei.stuba.sk:8080/core/search/filterContents',
@@ -69,6 +75,27 @@ const SearchFilter = (props) => {
     }
 
     return (<Grid container className={classes.dropDownStyles}>
+        <Grid item xs={2}>
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Zoradiť</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={descendingSort}
+                    label="Age"
+                    onChange={handleChangeDescendingSort}
+                >
+                    <MenuItem value={null}>
+                        <em>Nezoradiť</em>
+                    </MenuItem>
+                    <MenuItem value={true}>Zostupne</MenuItem>
+                    <MenuItem value={false}>Vzostupne</MenuItem>
+                </Select>
+            </FormControl>
+        </Grid>
+
+        <Grid item xs={1}/>
+
         <Grid item xs={2}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Entita</InputLabel>

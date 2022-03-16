@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {useOktaAuth} from '@okta/okta-react';
 import OktaSignInWidget from '../../components/loginForm/OktaSignInWidget';
 
-function Login() {
+function LoginPage() {
   const {oktaAuth, authState} = useOktaAuth();
 
   const onSuccess = function (res) {
@@ -27,4 +27,4 @@ function Login() {
       onError={onError}/>;
 }
 
-export default Login;
+export default LoginPage;
