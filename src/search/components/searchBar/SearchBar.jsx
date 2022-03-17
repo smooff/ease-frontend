@@ -27,6 +27,9 @@ const SearchBar = (props) => {
                 fontSize: "0.875rem",
                 fontWeight: 600
             }
+        },
+        textFieldBackground:{
+            backgroundColor:"rgba(0, 0, 0, .1)"
         }
     }));
     const classes = useStyles();
@@ -190,7 +193,7 @@ const SearchBar = (props) => {
                 <form ref={nameForm} onSubmit={onSubmit}>
                     <TextField fullWidth label="Vyhľadaj" id="Vyhľadaj" color="secondary" name={'searchvalue'}
                                onKeyDown={handleKeyPress} onChange={e => setHistoryString(e.target.value)}
-                               value={historyString}
+                               value={historyString} className={classes.textFieldBackground}
                     />
                 </form>
             </Grid>

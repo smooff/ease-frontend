@@ -43,12 +43,18 @@ const MainPage = (props) => {
     //styles
     const useStyles = makeStyles(() => ({
         searchBar: {
-            minHeight: '100%',
             marginTop: searchBarMarginTop
         },
         logo: {
             width: "388px",
             height: "161px",
+        },
+        //styly, pre 100% height, kvoli pozadiu
+        mainDiv: {
+            backgroundImage: "url(/easeBackground.jpg)",
+            height: "100vh",
+            overflow: "hidden",
+            backgroundSize: "cover"
         }
     }));
     const classes = useStyles();
@@ -69,7 +75,7 @@ const MainPage = (props) => {
         }
     }, [authState, oktaAuth]); // Update if authState changes
 
-    return (<>
+    return (<div className={classes.mainDiv}>
         <Navbar userName={userInfo?.name} historyDrawerState={handleHistoryDrawerOpen}/>
 
         <HistoryDrawer drawerState={openHistoryDrawer} closeDrawer={handleHistoryDrawerClose}/>
@@ -103,7 +109,7 @@ const MainPage = (props) => {
             </Grid>
         </Grid>
 
-    </>);
+    </div>);
 }
 
 export default MainPage;

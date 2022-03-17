@@ -12,6 +12,13 @@ import {useOktaAuth} from "@okta/okta-react";
 
 const DataTreeView = (props) => {
 
+    const useStyles = makeStyles(() => ({
+        tableBackgroundStyle:{
+            backgroundColor:"rgba(0, 0, 0, .1)"
+        }
+    }));
+    const classes = useStyles();
+
     //data pre modal
     const [modalData, setModalData] = React.useState('');
     //urcuje typ zaznamu, na zaklade toho sa davaju do modalu data
@@ -172,6 +179,7 @@ const DataTreeView = (props) => {
     return (<TreeView
         defaultCollapseIcon={<ExpandMoreIcon/>}
         defaultExpandIcon={<ChevronRightIcon/>}
+        className={classes.tableBackgroundStyle}
     >
         {getTreeItemsFromData(props.treeItems)}
     </TreeView>);

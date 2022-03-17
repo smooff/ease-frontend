@@ -14,6 +14,9 @@ const SearchFilter = (props) => {
         },
         secondDropDown: {
             marginRight: "600px",
+        },
+        eachDropDownBackground:{
+            backgroundColor:"rgba(0, 0, 0, .1)"
         }
     }));
     const classes = useStyles();
@@ -75,7 +78,7 @@ const SearchFilter = (props) => {
     }
 
     return (<Grid container className={classes.dropDownStyles}>
-        <Grid item xs={2}>
+        <Grid item xs={2} className={classes.eachDropDownBackground}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Zoradiť</InputLabel>
                 <Select
@@ -97,7 +100,7 @@ const SearchFilter = (props) => {
         <Grid item xs={1}/>
 
         <Grid item xs={2}>
-            <FormControl fullWidth>
+            <FormControl fullWidth className={classes.eachDropDownBackground}>
                 <InputLabel id="demo-simple-select-label">Entita</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
@@ -120,7 +123,7 @@ const SearchFilter = (props) => {
 
         <Grid item xs={2}>
             {allDetailedTypes !== '' ?
-                <FormControl fullWidth>
+                <FormControl fullWidth className={classes.eachDropDownBackground}>
                     <InputLabel id="demo-simple-select-label">Detail</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
