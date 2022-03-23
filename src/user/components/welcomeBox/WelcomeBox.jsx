@@ -22,15 +22,10 @@ const WelcomeBox = (props) => {
             <Grid item xs={12}>
                <img src="logo-nobackground.png" className={classes.logo}/>
             </Grid>
-            <Grid item xs={12}>
-                <Link to="/ease">
-                    <Button variant="contained">Prihlásiť sa</Button>
-                </Link>
-            </Grid>
 
             <Grid item xs={12}>
                 <Link to="/login">
-                    <Button variant="contained">Prihlásenie 2.0</Button>
+                    <Button variant="contained">Prihlásenie</Button>
                 </Link>
             </Grid>
         </Grid>

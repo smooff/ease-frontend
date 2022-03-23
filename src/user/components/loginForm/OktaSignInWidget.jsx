@@ -1,10 +1,59 @@
 import React, {Component} from 'react';
 import {withOktaAuth} from '@okta/okta-react';
 import {OktaAuth} from '@okta/okta-auth-js';
-import {Button, TextField} from '@material-ui/core';
+import {Button, Grid, makeStyles, TextField} from '@material-ui/core';
 import {withRouter} from 'react-router-dom';
 
+import { withStyles } from '@material-ui/styles';
+
+const styles = theme => ({
+    title: {
+        textAlign: "center",
+        marginTop: "15%"
+    },
+    logo:{
+        width:"500px",
+        height:"215px",
+    },
+    logbutton: {
+
+        width: "300px",
+        align: "center"
+
+    },
+    box:{
+        width: "500px",
+        padding: "10px",
+        margin: "10%",
+        marginLeft:"30% ",
+        align: "center",
+        marginBottom: "2%"
+    },
+    text:{
+        padding: "2%",
+        marginBottom: "2%"
+
+    },
+    between:{
+        marginBottom:"5%"
+    },
+    fields:{
+        width: "300px"
+    },
+    loginText:{
+        textAlign: "center",
+        color: "grey"
+    }
+
+});
+
+
+
+
+
+
 class OktaSignInWidget extends Component {
+
   constructor(props) {
     super(props);
 
@@ -51,25 +100,46 @@ class OktaSignInWidget extends Component {
   }
 
   render() {
-    return (
-      <form onSubmit={this.signIn} className="login-form">
-        <h2>Prihlásenie</h2>
-        <p>Prosím prihláste sa pre pokračovanie</p>
-        <label className="full-width-input">
-          Email
-          <TextField type="text" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange}
-                     required/>
-        </label>
-        <label className="full-width-input">
-          Heslo
-          <TextField type="password" placeholder="Heslo" value={this.state.password}
-                     onChange={this.handlePasswordChange} required autoComplete="off"/>
-        </label>
-        <Button className="button" variant="contained" type="submit">Prihlásiť sa</Button>
 
-      </form>
+      const { classes } = this.props;
+    return (
+
+
+
+        <Grid className={classes.box} item xs={12}>
+
+          <form onSubmit={this.signIn} className="login-form">
+              <Grid className={classes.loginText}>
+                    <h2>Prihlásenie</h2>
+              </Grid>
+
+
+              <Grid className={classes.between}>
+
+                  <Grid className={classes.text}> Email* </Grid>
+
+
+                  <TextField className={classes.fields} variant="outlined" type="text" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} required/>
+
+              </Grid>
+
+              <Grid className={classes.between}>
+                  <Grid className={classes.text} >Heslo* </Grid>
+
+
+                    <TextField className={classes.fields} variant="outlined" type="password" placeholder="Heslo" value={this.state.password}
+                     onChange={this.handlePasswordChange} required autoComplete="off"/>
+              </Grid>
+
+              <Grid className={classes.logbutton}>
+                    <Button  className="button" variant="contained" type="submit">Prihlásiť sa</Button>
+              </Grid>
+
+          </form>
+        </Grid>
     );
   }
 }
 
+OktaSignInWidget = withStyles(styles, {name: 'Okta'})(OktaSignInWidget);
 export default withRouter(withOktaAuth(OktaSignInWidget));
