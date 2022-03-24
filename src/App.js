@@ -1,4 +1,3 @@
-import './App.css';
 import {LoginCallback, SecureRoute, Security} from "@okta/okta-react";
 import {OktaAuth, toRelativeUrl} from "@okta/okta-auth-js";
 import {Route, useHistory} from "react-router-dom";
