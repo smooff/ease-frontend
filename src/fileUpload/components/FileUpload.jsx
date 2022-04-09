@@ -1,33 +1,44 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {useOktaAuth} from "@okta/okta-react";
-import LinearProgress from '@material-ui/core/LinearProgress';
-import {Box, Typography, Button, ListItem, withStyles} from '@material-ui/core';
-
-const BorderLinearProgress = withStyles((theme) => ({
-    root: {
-        height: 15,
-        borderRadius: 5,
-    },
-    colorPrimary: {
-        backgroundColor: "#EEEEEE",
-    },
-    bar: {
-        borderRadius: 5,
-        backgroundColor: '#1a90ff',
-    },
-}))(LinearProgress);
+import {Button, makeStyles, Typography} from '@material-ui/core';
+import Divider from "@mui/material/Divider";
 
 const FileUpload = (props) => {
+
+    const useStyles = makeStyles({
+        allComponents: {
+            textAlign: "center",
+        },
+        uploadBtn: {
+            marginTop: "1rem",
+        },
+        firstDivider: {
+            marginBottom: "1rem"
+        },
+        secondDivider: {
+            marginBottom: "1rem",
+            marginTop: "1rem"
+        },
+        uploadedFilesDiv: {
+            marginBottom: "1rem"
+        },
+        uploadSucc: {
+            color: "green"
+        }
+    });
+    const classes = useStyles();
 
     const [selectedFiles, setSelectedFiles] = useState(undefined);
     const [message, setMessage] = useState("");
     const [isError, setIsError] = useState(false);
-    const [fileInfos, setFileInfos] = useState([]);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
 
     const {authState, oktaAuth} = useOktaAuth();
 
     const upload = (file) => {
+        setMessage("")
+        setUploadedFiles([])
         let formData = new FormData();
         formData.append("file", file);
         return axios.post("https://tp2-ai.fei.stuba.sk:8080/integ/eaUpload/uploadSingle", formData, {
@@ -36,13 +47,13 @@ const FileUpload = (props) => {
                 Authorization: `Bearer ${authState.accessToken.accessToken}`
             }
         }).then((res) => {
-            console.log(res);
             setIsError(false);
-            setMessage("Nahrávanie úspešné.")
+            setMessage("Nahranie úspešné.")
+            setUploadedFiles([file])
         }).catch((e) => {
             setIsError(true);
-            setMessage("Nahrávanie zlyhalo.")
-            console.log(e.data.message)
+            setMessage("Nahranie zlyhalo.")
+            setUploadedFiles([])
         });
     }
 
@@ -51,7 +62,11 @@ const FileUpload = (props) => {
     }
 
     return (
-        <div className="mg20">
+        <div className={classes.allComponents}>
+            <div className={classes.firstDivider}>
+                <Divider/>
+            </div>
+
             <label>
                 <input
                     id="btn-upload"
@@ -67,10 +82,17 @@ const FileUpload = (props) => {
                 </Button>
             </label>
             <div className="file-name">
-                {selectedFiles && selectedFiles.length > 0 ? selectedFiles[0].name : null}
+                {selectedFiles !== undefined ?
+                    <div>
+                        <Typography variant="h6">
+                            Zoznam súborov
+                        </Typography>
+                        {selectedFiles.name}
+                    </div>
+                    : null}
             </div>
             <Button
-                className="btn-upload"
+                className={classes.uploadBtn}
                 color="primary"
                 variant="contained"
                 component="span"
@@ -78,24 +100,27 @@ const FileUpload = (props) => {
                 onClick={() => {
                     upload(selectedFiles)
                 }}>
-                Upload
+                Nahrať
             </Button>
-            <Typography variant="subtitle2" className={`upload-message ${isError ? "error" : ""}`}>
-                {message}
-            </Typography>
-            <Typography variant="h6" className="list-header">
-                List of Files
-            </Typography>
-            <ul className="list-group">
-                {fileInfos &&
-                    fileInfos.map((file, index) => (
-                        <ListItem
-                            divider
-                            key={index}>
-                            <a href={file.url}>{file.name}</a>
-                        </ListItem>
+
+         <div className={classes.secondDivider}><Divider/></div>
+
+            {isError ?
+                <Typography variant="h6" color={"secondary"}>
+                    {message}
+                </Typography> :
+                <Typography variant="h6" className={classes.uploadSucc}>
+                    {message}
+                </Typography>
+            }
+
+            <div className={classes.uploadedFilesDiv}>
+                {uploadedFiles.length > 0 ? " Nahrané súbory: " : ""}
+                {uploadedFiles &&
+                    uploadedFiles.map((file) => (
+                        file.name
                     ))}
-            </ul>
+            </div>
         </div>
     );
 }
