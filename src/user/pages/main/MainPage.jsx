@@ -5,6 +5,8 @@ import Navbar from "../../components/navbar/Navbar";
 import SearchBar from "../../../search/components/searchBar/SearchBar";
 import {useWindowDimensions} from "../../../responsiveDesign/components/responsiveUtility/ResponsiveUtility";
 import HistoryDrawer from "../../components/historyDrawer/HistoryDrawer";
+import FileUpload from "../../../fileUpload/components/FileUpload";
+import ModalFileUpload from "../../../fileUpload/components/ModalFileUpload";
 
 const MainPage = (props) => {
 
@@ -52,9 +54,9 @@ const MainPage = (props) => {
         //styly, pre 100% height, kvoli pozadiu
         mainDiv: {
             backgroundImage: "url(/easeBackground.jpg)",
-            height: "100vh",
-            overflow: "hidden",
-            backgroundSize: "cover"
+            backgroundSize: "100% 100%",
+            height: "100%",
+            minHeight: "100vh",
         }
     }));
     const classes = useStyles();
@@ -93,21 +95,23 @@ const MainPage = (props) => {
             <Grid item>
                 <SearchBar changeBoxVisibility={changeBoxVisible} changeSearchValue={changeSearchedValue}
                            windowWidth={width}/>
+                <ModalFileUpload/>
             </Grid>
-        </Grid>
 
-        <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            style={{minHeight: '100%'}}
-        >
-            <Grid item>
-                {/*{boxVisible ? <SearchResultBox searchedValue={searchedValue} windowHeight={height} windowWidht={width}/> : null}*/}
-            </Grid>
         </Grid>
+{/*<FileUpload/>*/}
+{/*        <Grid*/}
+{/*            container*/}
+{/*            spacing={0}*/}
+{/*            direction="column"*/}
+{/*            alignItems="center"*/}
+{/*            justifyContent="center"*/}
+{/*            style={{minHeight: '100%'}}*/}
+{/*        >*/}
+{/*            <Grid item>*/}
+{/*                /!*{boxVisible ? <SearchResultBox searchedValue={searchedValue} windowHeight={height} windowWidht={width}/> : null}*!/*/}
+{/*            </Grid>*/}
+{/*        </Grid>*/}
 
     </div>);
 }
