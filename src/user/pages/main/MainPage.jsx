@@ -6,7 +6,6 @@ import SearchBar from "../../../search/components/searchBar/SearchBar";
 import {useWindowDimensions} from "../../../responsiveDesign/components/responsiveUtility/ResponsiveUtility";
 import HistoryDrawer from "../../components/historyDrawer/HistoryDrawer";
 import FileUpload from "../../../fileUpload/components/FileUpload";
-import ModalFileUpload from "../../../fileUpload/components/ModalFileUpload";
 
 const MainPage = (props) => {
 
@@ -95,11 +94,11 @@ const MainPage = (props) => {
             <Grid item>
                 <SearchBar changeBoxVisibility={changeBoxVisible} changeSearchValue={changeSearchedValue}
                            windowWidth={width}/>
-                <ModalFileUpload/>
+                <FileUpload/>
             </Grid>
 
         </Grid>
-{/*<FileUpload/>*/}
+{/*<ModalFileUpload/>*/}
 {/*        <Grid*/}
 {/*            container*/}
 {/*            spacing={0}*/}
