@@ -4,43 +4,42 @@ import {OktaAuth} from '@okta/okta-auth-js';
 import {Button, Grid, TextField} from '@material-ui/core';
 import {withRouter} from 'react-router-dom';
 
-import {withStyles} from '@material-ui/styles';
+import {withStyles,useMediaQuery} from '@material-ui/styles';
 
 const styles = theme => ({
     title: {
-        textAlign: "center",
         marginTop: "15%"
     },
-    logo: {
-        width: "500px",
-        height: "215px",
-    },
     loginButton: {
-        width: "300px",
+        width: "100%",
         align: "center"
     },
     box: {
-        width: "500px",
-        padding: "10px",
-        margin: "10%",
-        marginLeft: "30% ",
-        align: "center",
-        marginBottom: "2%"
+        padding: "1%",
+        width: "60%",
+        float: "right"
     },
     text: {
-        padding: "2%",
-        marginBottom: "2%"
+        padding: "1%",
+        marginBottom: "1%",
+        float:"center"
     },
     between: {
-        marginBottom: "5%"
+        marginBottom: "1%"
     },
     fields: {
-        width: "300px"
+        width: "30%"
     },
     loginText: {
-        textAlign: "center",
         color: "grey"
+    },
+    mainDiv: {
+        backgroundImage: "url(/easeBackground.jpg)",
+        height: "100vh",
+        overflow: "hidden",
+        backgroundSize: "cover"
     }
+
 });
 
 class OktaSignInWidget extends Component {
@@ -85,7 +84,8 @@ class OktaSignInWidget extends Component {
             this.props.oktaAuth.signInWithRedirect({sessionToken: transaction.sessionToken});
             const {history} = this.props;
             history.push('/ease');
-        } else {
+        }else {
+
             throw new Error('Could not sign in: ' + transaction.status);
         }
     }
@@ -93,6 +93,7 @@ class OktaSignInWidget extends Component {
     render() {
         const {classes} = this.props;
         return (
+            <Grid className={classes.mainDiv}>
             <Grid className={classes.box} item xs={12}>
 
                 <form onSubmit={this.signIn}>
@@ -101,13 +102,13 @@ class OktaSignInWidget extends Component {
                     </Grid>
 
                     <Grid className={classes.between}>
-                        <Grid className={classes.text}> Email* </Grid>
+                        <Grid className={classes.text}> Email </Grid>
                         <TextField className={classes.fields} variant="outlined" type="text" placeholder="Email"
                                    value={this.state.email} onChange={this.handleEmailChange} required/>
                     </Grid>
 
                     <Grid className={classes.between}>
-                        <Grid className={classes.text}>Heslo* </Grid>
+                        <Grid className={classes.text}>Heslo </Grid>
                         <TextField className={classes.fields} variant="outlined" type="password" placeholder="Heslo"
                                    value={this.state.password}
                                    onChange={this.handlePasswordChange} required autoComplete="off"/>
@@ -117,6 +118,7 @@ class OktaSignInWidget extends Component {
                         <Button className="button" variant="contained" type="submit">Prihlásiť sa</Button>
                     </Grid>
                 </form>
+            </Grid>
             </Grid>
         );
     }
