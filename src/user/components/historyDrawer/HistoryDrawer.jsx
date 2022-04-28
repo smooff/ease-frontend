@@ -92,7 +92,11 @@ const HistoryDrawer = (props) => {
 
     const dateConverter = (date) => {
         const formatedDate = new Date(date);
-        return (formatedDate.getDate() + "." + (formatedDate.getMonth() + 1) + "." + formatedDate.getFullYear() + " " + formatedDate.getHours() + ":" + formatedDate.getMinutes());
+        var formatedHour = formatedDate.getHours();
+        formatedHour = ("0"+formatedHour).slice(-2);
+        var formatedMinutes = formatedDate.getMinutes();
+        formatedMinutes = ("0"+formatedMinutes).slice(-2);
+        return (formatedDate.getDate() + "." + (formatedDate.getMonth() + 1) + "." + formatedDate.getFullYear() + " " + formatedHour + ":" + formatedMinutes);
     }
 
     //fetch dat po otvoreni history drawera
