@@ -122,78 +122,45 @@ const DataTreeView = (props) => {
     const infoByType = () => {
         if (modalTypeData === 'OBJECT') {
             return (<>
-                <Typography variant={"h5"}>
-                    Typ:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.type}
-                    </Typography>
-                </Typography>
-                <Typography variant={"h5"}>
-                    Názov:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.name}
-                    </Typography>
-                </Typography>
-                <Typography variant={"h5"}>
-                    Alias:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.alias}
-                    </Typography>
-                </Typography>
-                <Typography variant={"h5"}>
-                    Autor:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.author}
-                    </Typography>
-                </Typography>
-                <Typography variant={"h5"}>
-                    Verzia:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.version}
-                    </Typography>
-                </Typography>
-                <Typography variant={"h5"}>
-                    Poznámka:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.note}
-                    </Typography>
-                </Typography>
+                <TreeItem
+                    label={modalData.type ===undefined ? "" : "Typ: "+modalData.type}
+                />
+                <TreeItem
+                    label={modalData.name ===undefined ? "" :"Názov: "+modalData.name}
+                />
+                <TreeItem
+                    label={modalData.alias ===undefined ? "" :"Alias: "+modalData.alias}
+                />
+                <TreeItem
+                    label={modalData.author ===undefined ? "" :"Autor: "+modalData.author}
+                />
+                <TreeItem
+                    label={modalData.version ===undefined ? "" :"Verzia: "+modalData.version}
+                />
+                <TreeItem
+                    label={modalData.note ===undefined ? "" :"Poznámka: "+modalData.note}
+                />
             </>)
         } else if (modalTypeData === 'DIAGRAM') {
             return (<>
-                <Typography variant={"h5"}>
-                    Názov:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.name}
-                    </Typography>
-                </Typography>
-                <Typography variant={"h5"}>
-                    Autor:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.author}
-                    </Typography>
-                </Typography>
-                <Typography variant={"h5"}>
-                    Verzia:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.version}
-                    </Typography>
-                </Typography>
+                <TreeItem
+                    label={modalData.name ===undefined ? "" :"Názov: "+modalData.name}
+                />
+                <TreeItem
+                    label={modalData.author ===undefined ? "" :"Autor: "+modalData.author}
+                />
+                <TreeItem
+                    label={modalData.version ===undefined ? "" :"Verzia: "+modalData.version}
+                />
             </>)
         } else if (modalTypeData === 'PACKAGE') {
             return (<>
-                <Typography variant={"h5"}>
-                    Názov:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.name}
-                    </Typography>
-                </Typography>
-                <Typography variant={"h5"}>
-                    Verzia:
-                    <Typography display="inline" variant={"h5"}>
-                        {modalData.version}
-                    </Typography>
-                </Typography>
+                <TreeItem
+                    label={modalData.name ===undefined ? "" :"Názov: "+modalData.name}
+                />
+                <TreeItem
+                    label={modalData.version ===undefined ? "" :"Verzia: "+modalData.version}
+                />
             </>)
         }
     }
