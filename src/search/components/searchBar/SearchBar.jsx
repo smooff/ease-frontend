@@ -4,11 +4,13 @@ import TextField from '@mui/material/TextField';
 import {Grid, makeStyles} from "@material-ui/core";
 import axios from "axios";
 import {useOktaAuth} from "@okta/okta-react";
-import {Button, TablePagination} from "@mui/material";
+import {Button, Dialog, DialogTitle, TablePagination} from "@mui/material";
 import DataTreeView from "../dataTreeView/DataTreeView";
 import SearchFilter from "../searchFilter/SearchFilter";
 import {useRecoilState} from "recoil";
 import {SearchHistoryString} from "../../state/searchHistoryString/SearchHistoryString";
+import BasicGraphModal from "../../../graphs/components/basicGraphModal/BasicGraphModal";
+import GraphUniversalModal from "../../../graphs/components/basicGraphModal/GraphUniversalModal";
 
 const SearchBar = (props) => {
 
@@ -167,7 +169,7 @@ const SearchBar = (props) => {
     }
 
     //vyhladanie po kliknuti na tlacidlo, nastavi 10 zaznamov na stranu + nastavi prvu (0) stranu
-    const handleClickEvent = () => {
+    const handleClickEventSearch = () => {
         setRowsPerPage(10);
         setPageCount(0);
         if (!handleSearch(10, 0)) {
@@ -182,6 +184,15 @@ const SearchBar = (props) => {
     };
     const [historyString, setHistoryString] = useRecoilState(SearchHistoryString);
 
+
+    //GENERAL GRAF
+    const [openModalGraph, setOpenModalGraph] = React.useState(false);
+    const handleClickOpenModalGraph = () => {
+        setOpenModalGraph(true);
+    };
+    const handleCloseModalGraph = () => {
+        setOpenModalGraph(false);
+    };
     return (
         <Box
             sx={{
@@ -198,8 +209,12 @@ const SearchBar = (props) => {
                 </form>
             </Grid>
             <Grid className={classes.searchButton}>
-                <Button onClick={handleClickEvent} variant="contained"
+                <Button onClick={handleClickEventSearch} variant="contained"
                         className={classes.searchButton}>Vyhľadaj</Button>
+
+                <Button onClick={handleClickOpenModalGraph} variant="contained"
+                        className={classes.searchButton}>Všeobecný graf</Button>
+
                 <SearchFilter changeDropDownEntity={changeDropDownEntityType}
                               changeDropDownDiagram={changeDropDownDiagramDetailedTypes}
                               changeDropDownObject={changeDropDownObjectDetailedTypes}
@@ -221,6 +236,12 @@ const SearchBar = (props) => {
                 />
 
             </> : ""}
+            <Dialog fullWidth={true} maxWidth={"xl"} scroll={"paper"} onClose={handleCloseModalGraph}
+                    open={openModalGraph}>
+                <DialogTitle onClose={handleCloseModalGraph}>
+                    <GraphUniversalModal graphType={"generalGraph"}/>
+                </DialogTitle>
+            </Dialog>
         </Box>
     );
 }
