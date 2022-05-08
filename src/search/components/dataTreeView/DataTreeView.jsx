@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import TreeItem from "@material-ui/lab/TreeItem";
 import {Inventory2Outlined, PolylineOutlined} from "@mui/icons-material";
 import {AdjustOutlined} from "@material-ui/icons";
-import {Button, Dialog, DialogTitle, Typography} from "@mui/material";
+import {Button, Dialog, DialogTitle} from "@mui/material";
 import {makeStyles} from "@material-ui/core";
 import axios from "axios";
 import {useOktaAuth} from "@okta/okta-react";
-import BasicGraphModal from "../../../graphs/components/basicGraphModal/BasicGraphModal";
+import GraphUniversalModal from "../../../graphs/components/graphUniversalModal/GraphUniversalModal";
 
 const DataTreeView = (props) => {
 
@@ -36,66 +36,20 @@ const DataTreeView = (props) => {
         setOpenModalMoreInfo(false);
     };
 
-    const [nodesEdgesGraph, setNodesEdgesGraph] = useState([]);
+    //sluzi na posielanie id pre single unit graf
+    const [graphItemId, setGraphItemId] = React.useState('');
 
     // modal pre graf k zaznamu
     const [openModalGraph, setOpenModalGraph] = React.useState(false);
     const handleClickOpenModalGraph = (event, item) => {
         setOpenModalGraph(true);
-        makeRequestGraph();
+        setGraphItemId(item.id);
     };
     const handleCloseModalGraph = () => {
         setOpenModalGraph(false);
     };
 
     const {authState, oktaAuth} = useOktaAuth();
-
-    const parseNodesEdges = (data) => {
-        const nodes = []
-        const edges = []
-        var edgeCounterId = 0
-        data.forEach((record) => {
-            edgeCounterId = edgeCounterId+1;
-            const startNodeAlreadyExist = nodes.find(node => node.id == record.startNodeId);
-            const endNodeAlreadyExist = nodes.find(node => node.id == record.endNodeId);
-            //pridanie neexistujuceho nodu
-            if (startNodeAlreadyExist === undefined) {
-                nodes.push({
-                    id: record.startNodeId,
-                    data: {label: record.startNode},
-                    position: {x: 0, y: 0},
-                })
-            }
-            if (endNodeAlreadyExist === undefined) {
-                nodes.push({
-                    id: record.endNodeId,
-                    data: { label: record.endNode },
-                    position: {x: 0, y: 0},
-                })
-            }
-            //pridanie hrany k dvom nodom
-            edges.push(
-                { id: 'e'+edgeCounterId,
-                    source: record.startNodeId,
-                    target: record.endNodeId,
-                    type: 'smoothstep',
-                    animated: true }
-            )
-
-        })
-        const combinedNodesEdges = nodes.concat(edges)
-        setNodesEdgesGraph(combinedNodesEdges)
-    }
-
-    const makeRequestGraph = () => {
-        return axios.get(
-            'https://tp2-ai.fei.stuba.sk:8080/graph/relation/highLevelCompleteGraph', {
-                headers: {Authorization: `Bearer ${authState.accessToken.accessToken}`},
-            }
-        ).then((res) => {
-            parseNodesEdges(res.data)
-        }).catch(console.log);
-    }
 
     const makeRequestDetails = (type, id) => {
         return axios.get(
@@ -123,43 +77,43 @@ const DataTreeView = (props) => {
         if (modalTypeData === 'OBJECT') {
             return (<>
                 <TreeItem
-                    label={modalData.type ===undefined ? "" : "Typ: "+modalData.type}
+                    label={modalData.type === undefined || modalData.type === null ? "" : "Typ: " + modalData.type}
                 />
                 <TreeItem
-                    label={modalData.name ===undefined ? "" :"Názov: "+modalData.name}
+                    label={modalData.name === undefined || modalData.name === null ? "" : "Názov: " + modalData.name}
                 />
                 <TreeItem
-                    label={modalData.alias ===undefined ? "" :"Alias: "+modalData.alias}
+                    label={modalData.alias === undefined || modalData.alias === null ? "" : "Alias: " + modalData.alias}
                 />
                 <TreeItem
-                    label={modalData.author ===undefined ? "" :"Autor: "+modalData.author}
+                    label={modalData.author === undefined || modalData.author === null ? "" : "Autor: " + modalData.author}
                 />
                 <TreeItem
-                    label={modalData.version ===undefined ? "" :"Verzia: "+modalData.version}
+                    label={modalData.version === undefined || modalData.version === null ? "" : "Verzia: " + modalData.version}
                 />
                 <TreeItem
-                    label={modalData.note ===undefined ? "" :"Poznámka: "+modalData.note}
+                    label={modalData.note === undefined || modalData.note === null ? "" : "Poznámka: " + modalData.note}
                 />
             </>)
         } else if (modalTypeData === 'DIAGRAM') {
             return (<>
                 <TreeItem
-                    label={modalData.name ===undefined ? "" :"Názov: "+modalData.name}
+                    label={modalData.name === undefined || modalData.name === null ? "" : "Názov: " + modalData.name}
                 />
                 <TreeItem
-                    label={modalData.author ===undefined ? "" :"Autor: "+modalData.author}
+                    label={modalData.author === undefined || modalData.author === null ? "" : "Autor: " + modalData.author}
                 />
                 <TreeItem
-                    label={modalData.version ===undefined ? "" :"Verzia: "+modalData.version}
+                    label={modalData.version === undefined || modalData.version === null ? "" : "Verzia: " + modalData.version}
                 />
             </>)
         } else if (modalTypeData === 'PACKAGE') {
             return (<>
                 <TreeItem
-                    label={modalData.name ===undefined ? "" :"Názov: "+modalData.name}
+                    label={modalData.name === undefined || modalData.name === null ? "" : "Názov: " + modalData.name}
                 />
                 <TreeItem
-                    label={modalData.version ===undefined ? "" :"Verzia: "+modalData.version}
+                    label={modalData.version === undefined || modalData.version === null ? "" : "Verzia: " + modalData.version}
                 />
             </>)
         }
@@ -191,7 +145,8 @@ const DataTreeView = (props) => {
                     <Button onClick={(e) => handleClickOpenModalMoreInfo(e, treeItemData)}
                             style={{marginBottom: "15px"}}
                             variant="outlined">Viac informácií</Button>
-                    <Button onClick={handleClickOpenModalGraph} style={{marginLeft: "10px", marginBottom: "15px"}}
+                    <Button onClick={(e) => handleClickOpenModalGraph(e, treeItemData)}
+                            style={{marginLeft: "10px", marginBottom: "15px"}}
                             variant="outlined">Graf</Button>
 
                     <Dialog fullWidth={true} maxWidth={"sm"} scroll={"paper"} onClose={handleCloseModalMoreInfo}
@@ -204,7 +159,7 @@ const DataTreeView = (props) => {
                     <Dialog fullWidth={true} maxWidth={"xl"} scroll={"paper"} onClose={handleCloseModalGraph}
                             open={openModalGraph}>
                         <DialogTitle onClose={handleCloseModalGraph}>
-                            <BasicGraphModal nodesData={nodesEdgesGraph}/>
+                            <GraphUniversalModal graphType={"singleUnitGraph"} itemId={graphItemId}/>
                         </DialogTitle>
                     </Dialog>
                 </TreeItem>

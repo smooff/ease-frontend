@@ -58,7 +58,6 @@ const Navbar = (props) => {
 
                     <div className={classes.toolbarButtons}>
                         <IconButton
-                            size="large"
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
@@ -85,9 +84,9 @@ const Navbar = (props) => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                            {/*<MenuItem onClick={handleClose}>My account</MenuItem>*/}
                             {authState.isAuthenticated && (
-                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                <MenuItem onClick={handleLogout}>Odhlásenie</MenuItem>
                             )}
                         </Menu>
                     </div>

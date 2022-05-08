@@ -6,6 +6,9 @@ import SearchBar from "../../../search/components/searchBar/SearchBar";
 import {useWindowDimensions} from "../../../responsiveDesign/components/responsiveUtility/ResponsiveUtility";
 import HistoryDrawer from "../../components/historyDrawer/HistoryDrawer";
 import FileUpload from "../../../fileUpload/components/FileUpload";
+import axios from "axios";
+import {useRecoilState} from "recoil";
+import {GraphColorsState} from "../../../graphs/state/graphColorsState/GraphColorsState";
 
 const MainPage = (props) => {
 
@@ -76,6 +79,21 @@ const MainPage = (props) => {
         }
     }, [authState, oktaAuth]); // Update if authState changes
 
+    //pociatocne fetchovanie farieb pre hrany v grafoch
+    const [fetchColors, setFetchColors] = useState(false);
+    const [colorsState, setColorsState] = useRecoilState(GraphColorsState);
+    if (fetchColors === false) {
+        setFetchColors(true);
+
+        const colors = axios.get(
+            'https://tp2-ai.fei.stuba.sk:8080/graph/relation/filterContents', {
+                headers: {Authorization: `Bearer ${authState.accessToken.accessToken}`},
+            }
+        ).then((res) => {
+            setColorsState(res.data)
+        }).catch(console.log);
+    }
+
     return (<div className={classes.mainDiv}>
         <Navbar userName={userInfo?.name} historyDrawerState={handleHistoryDrawerOpen}/>
 
@@ -98,20 +116,6 @@ const MainPage = (props) => {
             </Grid>
 
         </Grid>
-{/*<ModalFileUpload/>*/}
-{/*        <Grid*/}
-{/*            container*/}
-{/*            spacing={0}*/}
-{/*            direction="column"*/}
-{/*            alignItems="center"*/}
-{/*            justifyContent="center"*/}
-{/*            style={{minHeight: '100%'}}*/}
-{/*        >*/}
-{/*            <Grid item>*/}
-{/*                /!*{boxVisible ? <SearchResultBox searchedValue={searchedValue} windowHeight={height} windowWidht={width}/> : null}*!/*/}
-{/*            </Grid>*/}
-{/*        </Grid>*/}
-
     </div>);
 }
 

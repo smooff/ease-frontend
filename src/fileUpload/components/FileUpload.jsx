@@ -13,18 +13,18 @@ const FileUpload = (props) => {
     };
 
     return (
-    <>
-        <Button onClick={handleClickOpenModal} style={{marginTop: "5vh", marginBottom:"2vh"}}
-                variant="outlined">Nahranie súborov</Button>
+        <>
+            <Button onClick={handleClickOpenModal} style={{marginTop: "2rem", marginBottom: "2vh"}}
+                    variant="outlined">Nahranie súborov</Button>
 
-        <Dialog fullWidth={true} maxWidth={"sm"} scroll={"paper"} onClose={handleCloseModal}
-                open={openModal}>
-            <DialogTitle onClose={handleCloseModal}>
-                Nahranie súborov
-            </DialogTitle>
-            <ModalFileUpload/>
-        </Dialog>
-    </>
+            <Dialog fullWidth={true} maxWidth={"sm"} scroll={"paper"} onClose={handleCloseModal}
+                    open={openModal}>
+                <DialogTitle onClose={handleCloseModal}>
+                    Nahranie súborov
+                </DialogTitle>
+                <ModalFileUpload/>
+            </Dialog>
+        </>
     );
 }
 

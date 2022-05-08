@@ -1,7 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Box} from "@material-ui/core";
+import React, {useRef, useState} from 'react';
+import {Box, Grid, makeStyles} from "@material-ui/core";
 import TextField from '@mui/material/TextField';
-import {Grid, makeStyles} from "@material-ui/core";
 import axios from "axios";
 import {useOktaAuth} from "@okta/okta-react";
 import {Button, Dialog, DialogTitle, TablePagination} from "@mui/material";
@@ -9,14 +8,18 @@ import DataTreeView from "../dataTreeView/DataTreeView";
 import SearchFilter from "../searchFilter/SearchFilter";
 import {useRecoilState} from "recoil";
 import {SearchHistoryString} from "../../state/searchHistoryString/SearchHistoryString";
-import BasicGraphModal from "../../../graphs/components/basicGraphModal/BasicGraphModal";
-import GraphUniversalModal from "../../../graphs/components/basicGraphModal/GraphUniversalModal";
+import GraphUniversalModal from "../../../graphs/components/graphUniversalModal/GraphUniversalModal";
+import GraphFilter from "../../../graphs/components/graphFilter/GraphFilter";
 
 const SearchBar = (props) => {
 
     const searchBarWidth = props.windowWidth;
 
     const useStyles = makeStyles(() => ({
+        graphButton: {
+            marginTop: "3rem",
+            marginBottom: "10px",
+        },
         searchButton: {
             marginTop: "10px",
             marginBottom: "10px",
@@ -30,8 +33,8 @@ const SearchBar = (props) => {
                 fontWeight: 600
             }
         },
-        textFieldBackground:{
-            backgroundColor:"rgba(0, 0, 0, .1)"
+        textFieldBackground: {
+            backgroundColor: "rgba(0, 0, 0, .1)"
         }
     }));
     const classes = useStyles();
@@ -41,18 +44,27 @@ const SearchBar = (props) => {
     //typ entity z dropdownu
     const [dropDownEntityType, setDropDownEntityType] = useState(null);
     const changeDropDownEntityType = (text) => {
+        if (text === '') {
+            text = null;
+        }
         setDropDownEntityType(text);
     };
 
     //diagramDetailedTypes z dropdownu
     const [dropDownDiagramDetailedTypes, setDropDownDiagramDetailedTypes] = useState(null);
     const changeDropDownDiagramDetailedTypes = (text) => {
+        if (text === '') {
+            text = null;
+        }
         setDropDownDiagramDetailedTypes(text);
     };
 
     //objectDetailedTypes z dropdownu
     const [dropDownObjectDetailedTypes, setDropDownObjectDetailedTypes] = useState(null);
     const changeDropDownObjectDetailedTypes = (text) => {
+        if (text === 'null') {
+            text = null;
+        }
         setDropDownObjectDetailedTypes(text);
     };
 
@@ -64,6 +76,9 @@ const SearchBar = (props) => {
     //zoradenie
     const [descendingSort, setDescendingSort] = React.useState(null);
     const changeDescendingSort = (text) => {
+        if (text === '') {
+            text = null;
+        }
         setDescendingSort(text);
         if (text === null) {
             changeOrderKeySort(null);
@@ -193,6 +208,16 @@ const SearchBar = (props) => {
     const handleCloseModalGraph = () => {
         setOpenModalGraph(false);
     };
+
+    //filtrovanie v general grafe
+    const [connectorType, setConnectorType] = useState(null);
+    const changeConnectorType = (text) => {
+        if (text === '') {
+            text = null;
+        }
+        setConnectorType(text);
+    };
+
     return (
         <Box
             sx={{
@@ -211,9 +236,6 @@ const SearchBar = (props) => {
             <Grid className={classes.searchButton}>
                 <Button onClick={handleClickEventSearch} variant="contained"
                         className={classes.searchButton}>Vyhľadaj</Button>
-
-                <Button onClick={handleClickOpenModalGraph} variant="contained"
-                        className={classes.searchButton}>Všeobecný graf</Button>
 
                 <SearchFilter changeDropDownEntity={changeDropDownEntityType}
                               changeDropDownDiagram={changeDropDownDiagramDetailedTypes}
@@ -236,10 +258,15 @@ const SearchBar = (props) => {
                 />
 
             </> : ""}
+            <Grid className={classes.graphButton}>
+                <Button onClick={handleClickOpenModalGraph} variant="contained"
+                        className={classes.searchButton}>Všeobecný graf</Button>
+                <GraphFilter changeConnectorType={changeConnectorType}/>
+            </Grid>
             <Dialog fullWidth={true} maxWidth={"xl"} scroll={"paper"} onClose={handleCloseModalGraph}
                     open={openModalGraph}>
                 <DialogTitle onClose={handleCloseModalGraph}>
-                    <GraphUniversalModal graphType={"generalGraph"}/>
+                    <GraphUniversalModal graphType={"generalGraph"} connectorType={connectorType}/>
                 </DialogTitle>
             </Dialog>
         </Box>

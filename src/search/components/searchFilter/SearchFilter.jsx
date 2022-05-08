@@ -15,8 +15,8 @@ const SearchFilter = (props) => {
         secondDropDown: {
             marginRight: "600px",
         },
-        eachDropDownBackground:{
-            backgroundColor:"rgba(0, 0, 0, .1)"
+        eachDropDownBackground: {
+            backgroundColor: "rgba(0, 0, 0, .1)"
         }
     }));
     const classes = useStyles();
@@ -88,11 +88,11 @@ const SearchFilter = (props) => {
                     label="Age"
                     onChange={handleChangeDescendingSort}
                 >
-                    <MenuItem value={null}>
+                    <MenuItem key={"Nezoradiť"} value={''}>
                         <em>Nezoradiť</em>
                     </MenuItem>
-                    <MenuItem value={true}>Zostupne</MenuItem>
-                    <MenuItem value={false}>Vzostupne</MenuItem>
+                    <MenuItem key={"Zostupne"} value={true}>Zostupne</MenuItem>
+                    <MenuItem key={"Vzostupne"} value={false}>Vzostupne</MenuItem>
                 </Select>
             </FormControl>
         </Grid>
@@ -109,12 +109,12 @@ const SearchFilter = (props) => {
                     label="Age"
                     onChange={handleChangeEntityType}
                 >
-                    <MenuItem value={null}>
+                    <MenuItem key={"nefiltrovat"} value={''}>
                         <em>Nefiltrovať</em>
                     </MenuItem>
-                    <MenuItem value={"OBJECT"}>OBJECT</MenuItem>
-                    <MenuItem value={"PACKAGE"}>PACKAGE</MenuItem>
-                    <MenuItem value={"DIAGRAM"}>DIAGRAM</MenuItem>
+                    <MenuItem key={"OBJECT"} value={"OBJECT"}>OBJECT</MenuItem>
+                    <MenuItem key={"PACKAGE"} value={"PACKAGE"}>PACKAGE</MenuItem>
+                    <MenuItem key={"DIAGRAM"} value={"DIAGRAM"}>DIAGRAM</MenuItem>
                 </Select>
             </FormControl>
         </Grid>
@@ -132,11 +132,11 @@ const SearchFilter = (props) => {
                         label="Age"
                         onChange={handleChangeSelectedDetailedType}
                     >
-                        <MenuItem value={null}>
+                        <MenuItem key={"Nefiltrovať"} value={''}>
                             <em>Nefiltrovať</em>
                         </MenuItem>
                         {allDetailedTypes.map((c) => (
-                            <MenuItem value={c}>{c}</MenuItem>
+                            <MenuItem key={c} value={c}>{c}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
