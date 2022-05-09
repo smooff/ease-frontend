@@ -33,7 +33,8 @@ const styles = theme => ({
         marginBottom: "1%"
     },
     fields: {
-        width: "100%"
+        width: "100%",
+        backgroundColor: "rgba(0, 0, 0, .1)"
     },
     loginText: {
         color: "grey",
