@@ -74,23 +74,32 @@ const GraphUniversalModal = (props) => {
         const edges = []
         var edgeCounterId = 0
         const colorSet = new Set();
+        console.log(data)
         data.forEach((record) => {
             edgeCounterId = edgeCounterId + 1;
             const startNodeAlreadyExist = nodes.find(node => node.id == record.startNodeId);
             const endNodeAlreadyExist = nodes.find(node => node.id == record.endNodeId);
-            //pridanie neexistujuceho nodu
+            //pridanie doposial neexistujuceho nodu
             if (startNodeAlreadyExist === undefined) {
+                const style = {
+                    background: record.startNodeColor,
+                }
                 nodes.push({
                     id: record.startNodeId,
                     data: {label: record.startNode},
                     position: {x: 0, y: 0},
+                    style
                 })
             }
             if (endNodeAlreadyExist === undefined) {
+                const style = {
+                    background: record.endNodeColor,
+                }
                 nodes.push({
                     id: record.endNodeId,
                     data: {label: record.endNode},
                     position: {x: 0, y: 0},
+                    style
                 })
             }
 
